@@ -19,7 +19,7 @@ def get_library(library_id):
                 l.address
             from libraryapp_library l
             where l.id = ?
-            """, (library_id))
+            """, (library_id,))
 
         return db_cursor.fetchone()
 

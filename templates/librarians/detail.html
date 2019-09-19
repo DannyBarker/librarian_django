@@ -1,0 +1,13 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Library</title>
+  </head>
+  <body>
+    <h1>{{ librarian.librarian_first }} {{ librarian.librarian_last }}</h1>
+
+    <div>Location: <a href={% url 'libraryapp:library' librarian.location_id %}>{{ librarian.location_name }}</a></div>
+  </body>
+</html>
