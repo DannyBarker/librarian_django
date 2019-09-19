@@ -9,5 +9,10 @@
     <h1>{{ library.title }}</h1>
 
     <div>Address: <address>{{ library.address }}</address></div>
+    <form action="{% url 'libraryapp:library' library.id %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="actual_method" value="DELETE">
+      <button>Delete</button>
+    </form>
   </body>
 </html>
