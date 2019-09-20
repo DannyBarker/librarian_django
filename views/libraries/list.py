@@ -18,7 +18,7 @@ def create_library(cursor, row):
 
     # Note: You are adding a blank books list to the library object
     # This list will be populated later (see below)
-    library.books = []
+    library.books = list()
 
     book = Book()
     book.id = _row["book_id"]
@@ -54,12 +54,13 @@ def library_list(request):
                 b.location_id,
                 b.librarian_id
             from libraryapp_library l
-            join libraryapp_book b on b.location_id = l.id
+            left join libraryapp_book b on b.location_id = l.id
             """)
 
             dataset = db_cursor.fetchall()
             # Start with an empty dictionary
             library_groups = {}
+            print(dataset)
 
             # Iterate the list of tuples
             for (library, book) in dataset:
@@ -69,18 +70,19 @@ def library_list(request):
                 # to the current library
                 if library.id not in library_groups:
                     library_groups[library.id] = library
-                    library_groups[library.id].books.append(book)
+                    if book.id is not None:
+                        library_groups[library.id].books.append(book)
 
                 # If the key does exist, just append the current
                 # book to the list of books for the current library
                 else:
-                    library_groups[library.id].books.append(book)
+                    if book.id is not None:
+                        library_groups[library.id].books.append(book)
 
             template = 'libraries/list.html'
             context = {
               'all_libraries': library_groups.values()
             }
-
             return render(request, template, context)
 
     elif request.method == 'POST':

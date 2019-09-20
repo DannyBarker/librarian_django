@@ -12,11 +12,13 @@
                 {{ library.title }}
             </a>
             ({{ library.address }})
+            {% if library.books|length > 0 %}
             <ul>
             {% for book in library.books %}
                 <a href={% url 'libraryapp:book' book.id %}><li>{{ book.title }}</a></li>
             {% endfor %}
             </ul>
+            {% endif %}
         </li>
     {% endfor %}
     </ol>
