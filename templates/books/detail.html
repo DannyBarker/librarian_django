@@ -1,20 +1,20 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Library</title>
-  </head>
-  <body>
-    <h1>{{ book.title }}</h1>
-    <h2>By {{ book.author }}</h2>
+{% extends 'shared/base.html' %}
+{% block content %}
+<h1>{{ book.title }}</h1>
+<h2>By {{ book.author }}</h2>
 
-    <div>Published in {{ book.year_published }}</div>
-    <div>ISBN: {{ book.ISBN }}</div>
-    <form action="{% url 'libraryapp:book' book.id %}" method="POST">
-      {% csrf_token %}
-      <input type="hidden" name="actual_method" value="DELETE">
-      <button>Delete</button>
-    </form>
-  </body>
-</html>
+<div>Published in {{ book.year_published }}</div>
+<div>ISBN: {{ book.ISBN }}</div>
+<div>Location: <a href={% url 'libraryapp:library' book.library_id %}>{{ book.library_name }}</a></div>
+<div>Registered by Admin <a href={% url 'libraryapp:librarian' book.user_id%}>{{ book.first_name }} {{ book.last_name }}</a></div>
+<form action="{% url 'libraryapp:book' book.id %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="actual_method" value="DELETE">
+  <button>Delete</button>
+</form>
+<form action="{% url 'libraryapp:book' book.id %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="actual_method" value="EDIT">
+  <button>Edit</button>
+</form>
+{% endblock %}

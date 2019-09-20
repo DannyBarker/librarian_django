@@ -28,7 +28,7 @@ def book_form(request):
         libraries = get_libraries()
         template = 'books/form.html'
         context = {
-            'all_libraries': libraries
+            'libraries': libraries
         }
 
         return render(request, template, context)
